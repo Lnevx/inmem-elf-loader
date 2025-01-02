@@ -1,0 +1,16 @@
+---
+BasedOnStyle: Google
+AlignAfterOpenBracket: BlockIndent
+AlignConsecutiveMacros: true
+AlwaysBreakTemplateDeclarations: No
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortLoopsOnASingleLine: false
+BreakBeforeBinaryOperators: NonAssignment
+ColumnLimit: 100
+ContinuationIndentWidth: 4
+IndentWidth: 4
+UseTab: Never
+
+...
