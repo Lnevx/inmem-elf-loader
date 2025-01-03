@@ -12,10 +12,10 @@ include_directories(${INCLUDE_DIR})
 set(CMAKE_C_STANDARD 11)
 
 set(ARCHS32 "i386")   # TODO: add support later
-set(ARCHS64 "amd64")
+set(ARCHS64 "x86_64")
 
 # Configure arch
-set(ARCH "amd64")
+set(ARCH "x86_64")
 if(CMAKE_TARGET_ARCH)
     set(ARCH ${CMAKE_TARGET_ARCH})
 endif()
@@ -25,7 +25,11 @@ if(${ARCH} IN_LIST ARCHS32)
 elseif(${ARCH} IN_LIST ARCHS64)
     set(ARCH_TYPE "64")
 else()
-    message(FATAL_ERROR "Unsupported arch: ${ARCH}")
+    string(REPLACE ";"  ", " archs "${ARCHS64};${ARCHS32}")
+    message(FATAL_ERROR
+        " Unsupported arch: ${ARCH}."
+        " Supported archs: ${archs}"
+    )
 endif()
 message(STATUS "Selected arch: ${ARCH} (${ARCH_TYPE}-bit)")
 
