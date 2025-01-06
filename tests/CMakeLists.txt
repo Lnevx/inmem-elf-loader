@@ -28,3 +28,4 @@ function(run_test target_test target_file loader_file)
 endfunction()
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/c)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cpp)
