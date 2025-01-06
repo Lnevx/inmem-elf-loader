@@ -63,3 +63,12 @@ target_link_options(loader
     -static-pie
     -T ${SRC_DIR}/loader.ld
 )
+add_custom_command(
+    TARGET loader POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY} --dump-section=.text=${CMAKE_CURRENT_BINARY_DIR}/loader.bin $<TARGET_FILE:loader>
+    COMMENT "Exporting loader as a shellcode"
+)
+
+# Configure tests
+enable_testing()
+add_subdirectory(tests)
