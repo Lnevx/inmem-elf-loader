@@ -22,7 +22,7 @@ add_dependencies(${BUILD_TESTS_TARGET} checker-venv)
 function(run_test target_test target_file loader_file)
     add_test(
         NAME ${target_file}
-        COMMAND ${CHECKER_VENV}/bin/python3 \
+        COMMAND ${CHECKER_VENV}/bin/python3
             ${CHECKER_SRC_DIR}/${target_test}.py TARGET=${target_file} LOADER=${loader_file}
     )
 endfunction()
