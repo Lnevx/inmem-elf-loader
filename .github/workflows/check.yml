@@ -1,0 +1,48 @@
+on:
+  pull_request:
+    branches: [ "main" ]
+
+  push:
+    branches: [ "main" ]
+
+
+name: Check
+
+env:
+  CMAKE_TARGET_ARCH: x86_64
+  CMAKE_BUILD_TYPE: Release
+  CMAKE_GENERATOR: Unix Makefiles
+
+jobs:
+  lint-code:
+    name: Lint code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+      - name: Run pre-commit hook
+        uses: pre-commit/action@v3.0.1
+
+  run-tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup CMake, C and C++
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake gcc-14 g++-14
+      - name: Setup Python
+        uses: actions/setup-python@v5
+      - name: Setup Golang
+        uses: actions/setup-go@v5
+      - name: Configure CMake, build project and tests
+        run: |
+          cmake -B build
+          cmake --build build
+          cmake --build build --target build-tests
+      - name: Run tests
+        run: cmake --build build --target test

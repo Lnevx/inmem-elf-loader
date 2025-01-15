@@ -47,6 +47,7 @@ add_executable(loader ${SRCS})
 target_compile_options(loader
     PUBLIC
     -Wall -Wextra -fPIE
+    -fno-stack-protector
     -z noexecstack
     -m${ARCH_TYPE}
     -DELFCLASS=ELFCLASS${ARCH_TYPE}

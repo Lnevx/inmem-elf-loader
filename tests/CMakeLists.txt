@@ -8,7 +8,7 @@ set(CHECKER_VENV ${CMAKE_CURRENT_BINARY_DIR}/venv)
 set(CHECKER_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_custom_command(OUTPUT ${CHECKER_VENV}
-    COMMAND python3 -m virtualenv ${CMAKE_CURRENT_BINARY_DIR}/venv
+    COMMAND python3 -m venv ${CMAKE_CURRENT_BINARY_DIR}/venv
         && . ${CMAKE_CURRENT_BINARY_DIR}/venv/bin/activate
         && pip install -r ${CMAKE_CURRENT_SOURCE_DIR}/requirements.txt
 
@@ -29,3 +29,4 @@ endfunction()
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/c)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cpp)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/go)

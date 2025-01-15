@@ -54,10 +54,6 @@ static void *loadelf(void *elf_addr, Elf_Ehdr *ehdr, Elf_Phdr *phdr) {
     return base;
 }
 
-void fini() {
-    s_exit(0);
-}
-
 __attribute__((section(".text._start"))) void _start() {
     void *elf_addr;
     Elf_Ehdr *ehdr = elf_addr = &__stop_text;
@@ -76,5 +72,5 @@ __attribute__((section(".text._start"))) void _start() {
     av[6] = (Elf_auxv_t){AT_RANDOM, (size_t)&_start};
     av[7] = (Elf_auxv_t){AT_NULL, 0};
 
-    a_trampo(entry, &av, sizeof(av), &fini);
+    a_trampo(entry, &av, sizeof(av));
 }
