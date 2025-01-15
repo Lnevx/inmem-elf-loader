@@ -34,11 +34,15 @@ jobs:
       - name: Setup CMake, C and C++
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake gcc-14 g++-14
+          sudo apt-get install -y cmake gcc g++
       - name: Setup Python
         uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
       - name: Setup Golang
         uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
       - name: Configure CMake, build project and tests
         run: |
           cmake -B build
