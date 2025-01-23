@@ -62,12 +62,10 @@ __attribute__((section(".text._start"))) void _start() {
     void *base = loadelf(elf_addr, ehdr, phdr);
     void (*entry)(void) = ehdr->e_entry + (ehdr->e_type == ET_DYN ? base : 0);
 
-    Elf_auxv_t av[8] = {
-        {AT_PHDR, {(size_t)phdr}},           {AT_PHENT, {(size_t)ehdr->e_phentsize}},
-        {AT_PHNUM, {(size_t)ehdr->e_phnum}}, {AT_PAGESZ, {PAGE_SIZE}},
-        {AT_ENTRY, {(size_t)entry}},         {AT_CLKTCK, {100}},
-        {AT_RANDOM, {(size_t)&_start}},      {AT_NULL, {0}}
-    };
+    Elf_auxv_t av[] = {{AT_PHDR, {(size_t)phdr}},           {AT_PHENT, {(size_t)ehdr->e_phentsize}},
+                       {AT_PHNUM, {(size_t)ehdr->e_phnum}}, {AT_PAGESZ, {PAGE_SIZE}},
+                       {AT_ENTRY, {(size_t)entry}},         {AT_CLKTCK, {100}},
+                       {AT_RANDOM, {(size_t)&_start}},      {AT_NULL, {0}}};
 
     a_trampo(entry, &av, sizeof(av));
 }

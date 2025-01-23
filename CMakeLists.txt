@@ -11,7 +11,7 @@ set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${INCLUDE_DIR})
 set(CMAKE_C_STANDARD 11)
 
-set(ARCHS32 "i386")   # TODO: add support later
+set(ARCHS32 "i386")
 set(ARCHS64 "x86_64")
 
 # Configure arch
@@ -49,7 +49,6 @@ target_compile_options(loader
     -Wall -Wextra -fPIE
     -fno-stack-protector
     -z noexecstack
-    -m${ARCH_TYPE}
     -DELFCLASS=ELFCLASS${ARCH_TYPE}
     $<$<CONFIG:DEBUG>:-g3>
     $<$<CONFIG:DEBUG>:-O0>

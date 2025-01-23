@@ -1,7 +1,6 @@
-#                     nr   1    2    3    4    5   6
-# User space ABI:          rdi, rsi, rdx, rcx, r8, r9
-# Kernel space ABI:   rax, rdi, rsi, rdx, r10, r8, r9
-
+#
+# https://wiki.osdev.org/System_V_ABI#x86-64
+#
     .text
     .align  4
     .globl  a_syscall

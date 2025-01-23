@@ -26,15 +26,30 @@ jobs:
         uses: pre-commit/action@v3.0.1
 
   run-tests:
-    name: Run tests
+    name: Run tests - ${{ matrix.variant.arch }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        variant:
+          - arch: x86_64
+            c-compiler: gcc
+            cxx-compiler: g++
+            packages: gcc g++
+          - arch: i386
+            c-compiler: i686-linux-gnu-gcc
+            cxx-compiler: i686-linux-gnu-g++
+            packages: gcc-i686-linux-gnu g++-i686-linux-gnu
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
       - name: Setup CMake, C and C++
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake gcc g++
+          sudo apt-get install -y cmake ${{ matrix.variant.packages }}
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -45,7 +60,10 @@ jobs:
           go-version: "1.23"
       - name: Configure CMake, build project and tests
         run: |
-          cmake -B build
+          cmake -B build \
+            -DCMAKE_TARGET_ARCH=${{ matrix.variant.arch }} \
+            -DCMAKE_C_COMPILER=${{ matrix.variant.c-compiler }} \
+            -DCMAKE_CXX_COMPILER=${{ matrix.variant.cxx-compiler }}
           cmake --build build
           cmake --build build --target build-tests
       - name: Run tests

@@ -19,5 +19,9 @@ DEF_SYSCALL2(int, munmap, void *, addr, size_t, length);
 DEF_SYSCALL3(int, mprotect, void *, addr, size_t, len, int, prot);
 
 void *s_mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset) {
+#ifdef SYS_mmap2
+    return (void *)SYSCALL(mmap2, addr, length, prot, flags, fd, offset >> 12);
+#else
     return (void *)SYSCALL(mmap, addr, length, prot, flags, fd, offset);
+#endif
 }
